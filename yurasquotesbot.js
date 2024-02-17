@@ -54,5 +54,5 @@ bot.launch();
 
 (async function ()
 {
-    if ((await getLastMessageTime()).length == 0) await setLastMessageTime(new Date().getTime())
+    if (Number(await getLastMessageTime()).toString() == "NaN") await setLastMessageTime(new Date().getTime())
 })()
