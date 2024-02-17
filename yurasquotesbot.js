@@ -46,8 +46,8 @@ cron.schedule("0 * * * *", async function ()
     
     if (timeForNewMessage < new Date().getTime()) return
     const phrases = await getPhrases();
-    bot.telegram.sendMessage(getChat(), phrases[randomInt(phrases.length)], { parse_mode: "HTML" }).catch(err => console.log(err))
-    setLastMessageTime(new Date().getTime())
+    await bot.telegram.sendMessage(await getChat(), phrases[randomInt(phrases.length)], { parse_mode: "HTML" }).catch(err => console.log(err))
+    await setLastMessageTime(new Date().getTime())
 })
 
 bot.launch();
