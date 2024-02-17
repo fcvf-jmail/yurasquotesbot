@@ -50,4 +50,9 @@ cron.schedule("0 * * * *", async function ()
     setLastMessageTime(new Date().getTime())
 })
 
-bot.launch()
+bot.launch();
+
+(async function ()
+{
+    if ((await getLastMessageTime()).length == 0) await setLastMessageTime(new Date().getTime())
+})()
