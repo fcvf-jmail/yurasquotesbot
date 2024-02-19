@@ -54,5 +54,5 @@ bot.launch();
 
 (async function ()
 {
-    if (Number(await getLastMessageTime()) == 0) await setLastMessageTime(new Date().getTime())
+    if ((await getLastMessageTime()).length < 8) await setLastMessageTime(new Date().getTime())
 })()
