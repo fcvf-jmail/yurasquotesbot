@@ -39,7 +39,7 @@ bot.command("changeInterval", ctx => {
 })
 
 // cron.schedule("0 * * * *", async function ()
-(async function()
+;(async function()
 {
     const lastMessageTime = Number(await getLastMessageTime())
     const intervalInHours = Number(await getInterval())
