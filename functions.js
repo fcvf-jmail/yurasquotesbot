@@ -4,7 +4,7 @@ const fs = require("fs")
 const phrasesFilePath = path.join(__dirname, "phrases.json")
 const chatIdFilePath = path.join(__dirname, "chatId.txt")
 const intervalFilePath = path.join(__dirname, "interval.txt")
-const lastMessageTimeFilePath = path.join(__dirname, "lastMessageTime.txt.txt")
+const lastMessageTimeFilePath = path.join(__dirname, "lastMessageTime.txt")
 
 async function getPhrases()
 {
