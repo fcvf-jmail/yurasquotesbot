@@ -38,7 +38,8 @@ bot.command("changeInterval", ctx => {
     ctx.scene.enter("changeIntervalScene")
 })
 
-cron.schedule("0 * * * *", async function ()
+// cron.schedule("0 * * * *", async function ()
+(async function()
 {
     const lastMessageTime = Number(await getLastMessageTime())
     const intervalInHours = Number(await getInterval())
@@ -52,7 +53,7 @@ cron.schedule("0 * * * *", async function ()
     await bot.telegram.sendMessage(await getChat(), phrases[randomInt(phrases.length)], { parse_mode: "HTML" }).catch(err => console.log(err))
     await setLastMessageTime(new Date().getTime())
 })
-
+();
 bot.launch();
 
 (async function ()
