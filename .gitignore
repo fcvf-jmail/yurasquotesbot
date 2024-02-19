@@ -1,2 +1,6 @@
 node_modules/
 .env
+chatId.txt
+lastMessageTime.txt
+interval.txt
+phrases.json
