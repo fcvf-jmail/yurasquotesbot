@@ -43,6 +43,9 @@ cron.schedule("0 * * * *", async function ()
     const lastMessageTime = Number(await getLastMessageTime())
     const intervalInHours = Number(await getInterval())
     const timeForNewMessage = lastMessageTime + intervalInHours * 60 * 60 * 1000
+
+    console.log(`lastMessageTime: ${lastMessageTime}`)
+    console.log(`timeForNewMessage: ${timeForNewMessage}`)
     
     if (timeForNewMessage < new Date().getTime()) return
     const phrases = await getPhrases();
