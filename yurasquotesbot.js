@@ -47,6 +47,7 @@ bot.command("changeInterval", ctx => {
 
     console.log(`lastMessageTime: ${lastMessageTime}`)
     console.log(`timeForNewMessage: ${timeForNewMessage}`)
+    console.log(`actual time: ${new Date().getTime()}`)
     
     if (timeForNewMessage < new Date().getTime()) return
     const phrases = await getPhrases();
