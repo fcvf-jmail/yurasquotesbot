@@ -1,5 +1,6 @@
 const path = require("path")
 const fs = require("fs")
+const moment = require("moment")
 
 const phrasesFilePath = path.join(__dirname, "phrases.json")
 const chatIdFilePath = path.join(__dirname, "chatId.txt")
@@ -44,9 +45,17 @@ async function getLastMessageTime()
     return fs.readFileSync(lastMessageTimeFilePath, "utf-8")
 }
 
-async function setLastMessageTime(lastMessageTime = new Date().getTime())
+async function setLastMessageTime()
 {
-    fs.writeFileSync(lastMessageTimeFilePath, lastMessageTime.toString(), "utf-8")
+    const formattedTime = moment(new Date()).format("DD.MM.YYYY HH")
+    fs.writeFileSync(lastMessageTimeFilePath, formattedTime, "utf-8")
 }
 
-module.exports = { getPhrases, addPhrase, getChat, changeChat, getInterval, changeInterval, getLastMessageTime, setLastMessageTime }
+async function checkDifference(currentTime, timeToCompareWith, differenceInHours) 
+{
+    const formatedCurrentTime = moment(currentTime)
+    const formatedTimeToCompareWith = moment(timeToCompareWith, "DD.MM.YYYY HH")
+    return formatedCurrentTime.diff(formatedTimeToCompareWith, "hours") >= differenceInHours
+}
+
+module.exports = { getPhrases, addPhrase, getChat, changeChat, getInterval, changeInterval, getLastMessageTime, setLastMessageTime, checkDifference }

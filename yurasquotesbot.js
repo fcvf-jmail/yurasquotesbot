@@ -3,7 +3,7 @@ require("dotenv").config({path: path.join(__dirname, ".env")})
 const { Telegraf, Scenes, session } = require("telegraf")
 const cron = require("node-cron")
 const { randomInt } = require("crypto")
-const { getLastMessageTime, getInterval, getPhrases, getChat, setLastMessageTime } = require("./functions")
+const { getLastMessageTime, getInterval, getPhrases, getChat, setLastMessageTime, checkDifference } = require("./functions")
 
 const bot = new Telegraf(process.env.botToken)
 
@@ -38,23 +38,22 @@ bot.command("changeInterval", ctx => {
     ctx.scene.enter("changeIntervalScene")
 })
 
-cron.schedule("0 * * * *", async function ()
-// ;(async function()
+// cron.schedule("0 * * * *", async function ()
+;(async function()
 {
-    const lastMessageTime = Number(await getLastMessageTime())
+    const lastMessageTime = await getLastMessageTime()
     const intervalInHours = Number(await getInterval())
-    const timeForNewMessage = lastMessageTime + intervalInHours * 60 * 60 * 1000
-    
-    if (new Date().getTime() < timeForNewMessage) return
+
+    if (!await checkDifference(new Date(), lastMessageTime, intervalInHours)) return
     const phrases = await getPhrases();
     await bot.telegram.sendMessage(await getChat(), phrases[randomInt(phrases.length)], { parse_mode: "HTML" }).catch(err => console.log(err))
-    await setLastMessageTime(new Date().getTime())
+    await setLastMessageTime()
 })
-// ();
+();
 bot.launch();
 
 (async function ()
 {
     const lastMessageTime = await getLastMessageTime()
-    if (lastMessageTime.length < 8 || Number(lastMessageTime) == 0) await setLastMessageTime(new Date().getTime())
+    if (lastMessageTime.length < 10 || !lastMessageTime.includes(".")) await setLastMessageTime()
 })()
