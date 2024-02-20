@@ -16,7 +16,7 @@ const stage = new Scenes.Stage([addPhraseScene, changeChatScene, changeIntervalS
 bot.use(session());
 bot.use(stage.middleware())
 
-const admins = [6952299846, 1386450473]
+const admins = [6952299846, 1386450473, 658480285]
 
 bot.start(ctx => {
     if (!admins.includes(ctx.from.id)) return
