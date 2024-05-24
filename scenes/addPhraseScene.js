@@ -14,7 +14,7 @@ module.exports = new Scenes.WizardScene("addPhraseScene",
         if (ctx?.callbackQuery?.data == "cancel") return await cancelAdding(ctx)
         if (!ctx?.message?.text) return await ctx.reply("Пожалуйста дайте ответ текстом").catch(err => console.log(err))
         const errors = await checkHtmlTags(ctx.message.text);
-        if (errors) return await ctx.reply(`Обнаружены ошибки:\n\n${errors.join("\n")}`).catch(err => console.log(err))
+        if (errors) return await ctx.reply(`Обнаружены ошибки:\n\n${errors.join("\n")}`, { reply_markup: { inline_keyboard: [[{ text: "Назад", callback_data: "toPreviousStep" }]]}}).catch(err => console.log(err))
         await ctx.replyWithHTML(`Цитата будет выглядеть вот так:\n\n${ctx.message.text}\n\nПодтверждаете добавление?`, { reply_markup: { inline_keyboard: [[{ text: "Да", callback_data: "confirmAdding" }], [{ text: "Назад", callback_data: "toPreviousStep" }]]}}).catch(err => console.log(err))
         ctx.scene.session.state.phrase = ctx.message.text;
         return ctx.wizard.next()
